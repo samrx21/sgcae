@@ -1,0 +1,47 @@
+# RF-06. Administración de puntos de acceso
+# Ejecuta las peticiones en orden con "Send Request" (Visual Studio o Rider).
+
+@baseUrl = http://localhost:5190
+# Reemplaza estos valores con los que devuelven las peticiones de registro
+@archivoId = PEGAR_AQUI
+
+### Listar puntos de acceso (datos semilla) (esperado: 200)
+GET {{baseUrl}}/api/access-points
+
+### Registrar un punto de acceso (esperado: 201)
+POST {{baseUrl}}/api/access-points
+Content-Type: application/json
+
+{
+  "name": "Archivo documental",
+  "type": "RestrictedArea",
+  "location": "Tercer piso, oficina 302"
+}
+
+### Consultar un punto de acceso (esperado: 200)
+GET {{baseUrl}}/api/access-points/{{archivoId}}
+
+### Listar solo los puntos habilitados (esperado: 200)
+GET {{baseUrl}}/api/access-points?isEnabled=true
+
+### Inhabilitar punto de acceso (bodega) (esperado: 204)
+PATCH {{baseUrl}}/api/access-points/0199f7a0-0000-7000-8000-000000000003/disable
+
+### Habilitar punto de acceso (bodega) (esperado: 204)
+PATCH {{baseUrl}}/api/access-points/0199f7a0-0000-7000-8000-000000000003/enable
+
+### 409 · Nombre de punto de acceso duplicado (esperado: 409)
+POST {{baseUrl}}/api/access-points
+Content-Type: application/json
+
+{
+  "name": "Parqueadero",
+  "type": "Parking",
+  "location": null
+}
+
+### Inhabilitar un punto de acceso (esperado: 204)
+PATCH {{baseUrl}}/api/access-points/{{archivoId}}/disable
+
+### 400 · Inhabilitar un punto ya inhabilitado (esperado: 400)
+PATCH {{baseUrl}}/api/access-points/{{archivoId}}/disable
