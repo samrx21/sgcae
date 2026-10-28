@@ -1,0 +1,108 @@
+# RF-01. Gestión de empleados
+# Ejecuta las peticiones en orden con "Send Request" (Visual Studio o Rider).
+
+@baseUrl = http://localhost:5190
+# Reemplaza estos valores con los que devuelven las peticiones de registro
+@employeeId = PEGAR_AQUI
+@employee2Id = PEGAR_AQUI
+
+### Registrar empleado (Laura) (esperado: 201)
+POST {{baseUrl}}/api/employees
+Content-Type: application/json
+
+{
+  "identificationNumber": "1037654321",
+  "firstName": "Laura",
+  "lastName": "Gómez",
+  "email": "laura.gomez@logistica.com",
+  "jobTitle": "Analista de inventarios",
+  "area": "Bodega"
+}
+
+### Registrar empleado (Andrés) (esperado: 201)
+POST {{baseUrl}}/api/employees
+Content-Type: application/json
+
+{
+  "identificationNumber": "1020304050",
+  "firstName": "Andrés",
+  "lastName": "Restrepo",
+  "email": "andres.restrepo@logistica.com",
+  "jobTitle": "Conductor",
+  "area": "Transporte"
+}
+
+### Listar empleados con búsqueda (esperado: 200)
+GET {{baseUrl}}/api/employees?search=gomez
+
+### Consultar empleado (esperado: 200)
+GET {{baseUrl}}/api/employees/{{employeeId}}
+
+### Actualizar empleado (esperado: 204)
+PUT {{baseUrl}}/api/employees/{{employeeId}}
+Content-Type: application/json
+
+{
+  "firstName": "Laura",
+  "lastName": "Gómez",
+  "email": "laura.gomez@logistica.com",
+  "jobTitle": "Coordinadora de inventarios",
+  "area": "Bodega"
+}
+
+### Desactivar empleado (Andrés) (esperado: 204)
+PATCH {{baseUrl}}/api/employees/{{employee2Id}}/deactivate
+
+### 400 · Correo inválido (esperado: 400)
+POST {{baseUrl}}/api/employees
+Content-Type: application/json
+
+{
+  "identificationNumber": "99887766",
+  "firstName": "Andrés",
+  "lastName": "Restrepo",
+  "email": "correo-sin-arroba",
+  "jobTitle": "Conductor",
+  "area": "Transporte"
+}
+
+### 400 · Identificación con letras (esperado: 400)
+POST {{baseUrl}}/api/employees
+Content-Type: application/json
+
+{
+  "identificationNumber": "10AB2030",
+  "firstName": "Andrés",
+  "lastName": "Restrepo",
+  "email": "otro@logistica.com",
+  "jobTitle": "Conductor",
+  "area": "Transporte"
+}
+
+### 409 · Identificación duplicada (esperado: 409)
+POST {{baseUrl}}/api/employees
+Content-Type: application/json
+
+{
+  "identificationNumber": "1037654321",
+  "firstName": "Laura",
+  "lastName": "Gómez",
+  "email": "otra@logistica.com",
+  "jobTitle": "Analista de inventarios",
+  "area": "Bodega"
+}
+
+### 400 · Actualizar un empleado inactivo (esperado: 400)
+PUT {{baseUrl}}/api/employees/{{employee2Id}}
+Content-Type: application/json
+
+{
+  "firstName": "Andrés",
+  "lastName": "Restrepo",
+  "email": "andres.restrepo@logistica.com",
+  "jobTitle": "Conductor",
+  "area": "Transporte"
+}
+
+### 404 · Empleado inexistente (esperado: 404)
+GET {{baseUrl}}/api/employees/00000000-0000-0000-0000-000000000001
