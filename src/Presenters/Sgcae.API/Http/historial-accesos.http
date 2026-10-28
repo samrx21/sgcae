@@ -1,0 +1,18 @@
+# RF-04. Consulta del historial de accesos
+# Ejecuta las peticiones en orden con "Send Request" (Visual Studio o Rider).
+
+@baseUrl = http://localhost:5190
+# Reemplaza estos valores con los que devuelven las peticiones de registro
+@employeeId = PEGAR_AQUI
+
+### Historial completo (página de 5) (esperado: 200)
+GET {{baseUrl}}/api/access-history?pageSize=5
+
+### Historial de un empleado, solo rechazos (esperado: 200)
+GET {{baseUrl}}/api/access-history?employeeId={{employeeId}}&result=Denied
+
+### Historial de un punto de acceso en un rango de fechas (esperado: 200)
+GET {{baseUrl}}/api/access-history?accessPointId=0199f7a0-0000-7000-8000-000000000001&from=2026-10-27&to=2026-10-27
+
+### 400 · Rango de fechas invertido (esperado: 400)
+GET {{baseUrl}}/api/access-history?from=2026-12-31&to=2026-01-01
