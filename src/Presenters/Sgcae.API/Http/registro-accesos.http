@@ -1,0 +1,117 @@
+# RF-03. Registro de entradas y salidas
+# Ejecuta las peticiones en orden con "Send Request" (Visual Studio o Rider).
+
+@baseUrl = http://localhost:5190
+# Reemplaza estos valores con los que devuelven las peticiones de registro
+@credentialCode = PEGAR_AQUI
+@credential2Code = PEGAR_AQUI
+
+### Entrada autorizada por recepción (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000001",
+  "movementType": "Entry"
+}
+
+### Rechazo: segunda entrada sin haber salido (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000002",
+  "movementType": "Entry"
+}
+
+### Salida autorizada (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000001",
+  "movementType": "Exit"
+}
+
+### Rechazo: salida sin entrada previa (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000001",
+  "movementType": "Exit"
+}
+
+### Rechazo: credencial inexistente (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "CRD-NOEXISTE",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000001",
+  "movementType": "Entry"
+}
+
+### Rechazo: credencial bloqueada (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000001",
+  "movementType": "Entry"
+}
+
+### Rechazo: punto de acceso inhabilitado (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000003",
+  "movementType": "Entry"
+}
+
+### Entrada autorizada por bodega (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000003",
+  "movementType": "Entry"
+}
+
+### Rechazo: empleado inactivo (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credential2Code}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000002",
+  "movementType": "Entry"
+}
+
+### Rechazo: credencial revocada (esperado: 201)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credential2Code}}",
+  "accessPointId": "0199f7a0-0000-7000-8000-000000000002",
+  "movementType": "Entry"
+}
+
+### 404 · Punto de acceso inexistente (esperado: 404)
+POST {{baseUrl}}/api/access-requests
+Content-Type: application/json
+
+{
+  "credentialCode": "{{credentialCode}}",
+  "accessPointId": "00000000-0000-0000-0000-000000000009",
+  "movementType": "Entry"
+}
