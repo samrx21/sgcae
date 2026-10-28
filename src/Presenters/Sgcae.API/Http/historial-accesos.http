@@ -12,7 +12,7 @@ GET {{baseUrl}}/api/access-history?pageSize=5
 GET {{baseUrl}}/api/access-history?employeeId={{employeeId}}&result=Denied
 
 ### Historial de un punto de acceso en un rango de fechas (esperado: 200)
-GET {{baseUrl}}/api/access-history?accessPointId=0199f7a0-0000-7000-8000-000000000001&from=2026-10-27&to=2026-10-27
+GET {{baseUrl}}/api/access-history?accessPointId=0199f7a0-0000-7000-8000-000000000001&from=2026-10-28&to=2026-10-28
 
 ### 400 · Rango de fechas invertido (esperado: 400)
 GET {{baseUrl}}/api/access-history?from=2026-12-31&to=2026-01-01
