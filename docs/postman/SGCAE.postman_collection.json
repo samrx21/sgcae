@@ -1,0 +1,3716 @@
+{
+  "info": {
+    "name": "SGCAE · Control de acceso de empleados",
+    "description": "Ejecuta la carpeta \"1. Flujo de demostración\" en orden (o con el Collection Runner): cada petición de registro guarda los Ids y códigos en las variables de la colección. Luego ejecuta \"2. Errores de validación\".",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Flujo de demostración",
+      "item": [
+        {
+          "name": "RF-06 · Listar puntos de acceso (datos semilla)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000003\",\n      \"name\": \"Bodega central\",\n      \"type\": \"Warehouse\",\n      \"location\": \"Zona de carga y descarga\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    },\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000002\",\n      \"name\": \"Parqueadero\",\n      \"type\": \"Parking\",\n      \"location\": \"Sótano, acceso vehicular\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    },\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"name\": \"Recepción principal\",\n      \"type\": \"Reception\",\n      \"location\": \"Primer piso, entrada principal\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    },\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000004\",\n      \"name\": \"Sala de servidores\",\n      \"type\": \"RestrictedArea\",\n      \"location\": \"Segundo piso, área de tecnología\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    }\n  ],\n  \"totalCount\": 4,\n  \"pageNumber\": 1,\n  \"pageSize\": 15,\n  \"totalPages\": 1,\n  \"hasPreviousPage\": false,\n  \"hasNextPage\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · Registrar un punto de acceso",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Archivo documental\",\n  \"type\": \"RestrictedArea\",\n  \"location\": \"Tercer piso, oficina 302\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) { pm.collectionVariables.set('archivoId', pm.response.json().id); }"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Archivo documental\",\n  \"type\": \"RestrictedArea\",\n  \"location\": \"Tercer piso, oficina 302\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a1bf-7e85-8b5f-93813e252f0c\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · Consultar un punto de acceso",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points/{{archivoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points",
+                "{{archivoId}}"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points/{{archivoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points",
+                    "{{archivoId}}"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a1bf-7e85-8b5f-93813e252f0c\",\n  \"name\": \"Archivo documental\",\n  \"type\": \"RestrictedArea\",\n  \"location\": \"Tercer piso, oficina 302\",\n  \"isEnabled\": true,\n  \"createdAt\": \"2026-10-27T17:29:08.799667Z\",\n  \"updatedAt\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · Listar solo los puntos habilitados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points?isEnabled=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points"
+              ],
+              "query": [
+                {
+                  "key": "isEnabled",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points?isEnabled=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points"
+                  ],
+                  "query": [
+                    {
+                      "key": "isEnabled",
+                      "value": "true"
+                    }
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"01a17e68-a1bf-7e85-8b5f-93813e252f0c\",\n      \"name\": \"Archivo documental\",\n      \"type\": \"RestrictedArea\",\n      \"location\": \"Tercer piso, oficina 302\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T17:29:08.799667Z\",\n      \"updatedAt\": null\n    },\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000003\",\n      \"name\": \"Bodega central\",\n      \"type\": \"Warehouse\",\n      \"location\": \"Zona de carga y descarga\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    },\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000002\",\n      \"name\": \"Parqueadero\",\n      \"type\": \"Parking\",\n      \"location\": \"Sótano, acceso vehicular\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    },\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"name\": \"Recepción principal\",\n      \"type\": \"Reception\",\n      \"location\": \"Primer piso, entrada principal\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    },\n    {\n      \"id\": \"0199f7a0-0000-7000-8000-000000000004\",\n      \"name\": \"Sala de servidores\",\n      \"type\": \"RestrictedArea\",\n      \"location\": \"Segundo piso, área de tecnología\",\n      \"isEnabled\": true,\n      \"createdAt\": \"2026-10-27T00:00:00Z\",\n      \"updatedAt\": null\n    }\n  ],\n  \"totalCount\": 5,\n  \"pageNumber\": 1,\n  \"pageSize\": 15,\n  \"totalPages\": 1,\n  \"hasPreviousPage\": false,\n  \"hasNextPage\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · Registrar empleado (Laura)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificationNumber\": \"1037654321\",\n  \"firstName\": \"Laura\",\n  \"lastName\": \"Gómez\",\n  \"email\": \"laura.gomez@logistica.com\",\n  \"jobTitle\": \"Analista de inventarios\",\n  \"area\": \"Bodega\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) { pm.collectionVariables.set('employeeId', pm.response.json().id); }"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identificationNumber\": \"1037654321\",\n  \"firstName\": \"Laura\",\n  \"lastName\": \"Gómez\",\n  \"email\": \"laura.gomez@logistica.com\",\n  \"jobTitle\": \"Analista de inventarios\",\n  \"area\": \"Bodega\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · Registrar empleado (Andrés)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificationNumber\": \"1020304050\",\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"andres.restrepo@logistica.com\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) { pm.collectionVariables.set('employee2Id', pm.response.json().id); }"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identificationNumber\": \"1020304050\",\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"andres.restrepo@logistica.com\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a2b9-7913-93d2-4e2333b741f0\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · Listar empleados con búsqueda",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees?search=gomez",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "gomez"
+                }
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees?search=gomez",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "gomez"
+                    }
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"identificationNumber\": \"1037654321\",\n      \"fullName\": \"Laura Gómez\",\n      \"email\": \"laura.gomez@logistica.com\",\n      \"jobTitle\": \"Analista de inventarios\",\n      \"area\": \"Bodega\",\n      \"status\": \"Active\"\n    }\n  ],\n  \"totalCount\": 1,\n  \"pageNumber\": 1,\n  \"pageSize\": 15,\n  \"totalPages\": 1,\n  \"hasPreviousPage\": false,\n  \"hasNextPage\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · Consultar empleado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "{{employeeId}}"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees",
+                    "{{employeeId}}"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"identificationNumber\": \"1037654321\",\n  \"firstName\": \"Laura\",\n  \"lastName\": \"Gómez\",\n  \"fullName\": \"Laura Gómez\",\n  \"email\": \"laura.gomez@logistica.com\",\n  \"jobTitle\": \"Analista de inventarios\",\n  \"area\": \"Bodega\",\n  \"status\": \"Active\",\n  \"createdAt\": \"2026-10-27T17:29:08.9943966Z\",\n  \"updatedAt\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · Actualizar empleado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "{{employeeId}}"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 204.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Laura\",\n  \"lastName\": \"Gómez\",\n  \"email\": \"laura.gomez@logistica.com\",\n  \"jobTitle\": \"Coordinadora de inventarios\",\n  \"area\": \"Bodega\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees",
+                    "{{employeeId}}"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 204.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Laura\",\n  \"lastName\": \"Gómez\",\n  \"email\": \"laura.gomez@logistica.com\",\n  \"jobTitle\": \"Coordinadora de inventarios\",\n  \"area\": \"Bodega\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · Asignar credencial (Laura)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"{{employeeId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) { pm.collectionVariables.set('credentialCode', pm.response.json().code); }"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employeeId}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a368-713e-905f-64f92b72a16b\",\n  \"code\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"status\": \"Active\",\n  \"canBeUsed\": true,\n  \"issuedAt\": \"2026-10-27T17:29:09.2242817Z\",\n  \"statusChangedAt\": null,\n  \"statusReason\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · Consultar credencial por código",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials",
+                "{{credentialCode}}"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials",
+                    "{{credentialCode}}"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a368-713e-905f-64f92b72a16b\",\n  \"code\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"status\": \"Active\",\n  \"canBeUsed\": true,\n  \"issuedAt\": \"2026-10-27T17:29:09.2242817Z\",\n  \"statusChangedAt\": null,\n  \"statusReason\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · Listar credenciales de un empleado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials?employeeId={{employeeId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials"
+              ],
+              "query": [
+                {
+                  "key": "employeeId",
+                  "value": "{{employeeId}}"
+                }
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials?employeeId={{employeeId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials"
+                  ],
+                  "query": [
+                    {
+                      "key": "employeeId",
+                      "value": "{{employeeId}}"
+                    }
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"01a17e68-a368-713e-905f-64f92b72a16b\",\n      \"code\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"status\": \"Active\",\n      \"canBeUsed\": true,\n      \"issuedAt\": \"2026-10-27T17:29:09.2242817Z\"\n    }\n  ],\n  \"totalCount\": 1,\n  \"pageNumber\": 1,\n  \"pageSize\": 15,\n  \"totalPages\": 1,\n  \"hasPreviousPage\": false,\n  \"hasNextPage\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Entrada autorizada por recepción",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a3e3-79d1-a60b-85743982480c\",\n  \"result\": \"Granted\",\n  \"rejectionReason\": null,\n  \"message\": \"Entrada autorizada.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"accessPointName\": \"Recepción principal\",\n  \"occurredAt\": \"2026-10-27T17:29:09.348277Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Rechazo: segunda entrada sin haber salido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a41b-76f5-b374-ee357638330c\",\n  \"result\": \"Denied\",\n  \"rejectionReason\": \"AlreadyInside\",\n  \"message\": \"Acceso rechazado. El empleado ya registró una entrada y no ha registrado su salida.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"accessPointName\": \"Parqueadero\",\n  \"occurredAt\": \"2026-10-27T17:29:09.4039522Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Salida autorizada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Exit\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Exit\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a428-7650-aeb7-dd634209ac5f\",\n  \"result\": \"Granted\",\n  \"rejectionReason\": null,\n  \"message\": \"Salida autorizada.\",\n  \"movementType\": \"Exit\",\n  \"credentialCode\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"accessPointName\": \"Recepción principal\",\n  \"occurredAt\": \"2026-10-27T17:29:09.4162324Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Rechazo: salida sin entrada previa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Exit\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Exit\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a42f-7c01-b376-b2efd72eb9f9\",\n  \"result\": \"Denied\",\n  \"rejectionReason\": \"NotInside\",\n  \"message\": \"Acceso rechazado. El empleado no tiene una entrada registrada para poder salir.\",\n  \"movementType\": \"Exit\",\n  \"credentialCode\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"accessPointName\": \"Recepción principal\",\n  \"occurredAt\": \"2026-10-27T17:29:09.4230367Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Rechazo: credencial inexistente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"CRD-NOEXISTE\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"CRD-NOEXISTE\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a434-720f-9af4-dd834e98c463\",\n  \"result\": \"Denied\",\n  \"rejectionReason\": \"CredentialNotFound\",\n  \"message\": \"Acceso rechazado. La credencial no está registrada.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-NOEXISTE\",\n  \"employeeId\": null,\n  \"employeeFullName\": null,\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"accessPointName\": \"Recepción principal\",\n  \"occurredAt\": \"2026-10-27T17:29:09.4282262Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · Bloquear credencial",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}/block",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials",
+                "{{credentialCode}}",
+                "block"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 204.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Reporte de pérdida del carné\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}/block",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials",
+                    "{{credentialCode}}",
+                    "block"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 204.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Reporte de pérdida del carné\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Rechazo: credencial bloqueada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a449-7bfc-b949-ce70b47a858b\",\n  \"result\": \"Denied\",\n  \"rejectionReason\": \"CredentialBlocked\",\n  \"message\": \"Acceso rechazado. La credencial está bloqueada.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n  \"accessPointName\": \"Recepción principal\",\n  \"occurredAt\": \"2026-10-27T17:29:09.4492206Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · Desbloquear credencial",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}/unblock",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials",
+                "{{credentialCode}}",
+                "unblock"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 204."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}/unblock",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials",
+                    "{{credentialCode}}",
+                    "unblock"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 204."
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · Inhabilitar punto de acceso (bodega)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points/0199f7a0-0000-7000-8000-000000000003/disable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points",
+                "0199f7a0-0000-7000-8000-000000000003",
+                "disable"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 204."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points/0199f7a0-0000-7000-8000-000000000003/disable",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points",
+                    "0199f7a0-0000-7000-8000-000000000003",
+                    "disable"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 204."
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Rechazo: punto de acceso inhabilitado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a472-7d0d-8a1a-645ee6b02a48\",\n  \"result\": \"Denied\",\n  \"rejectionReason\": \"AccessPointDisabled\",\n  \"message\": \"Acceso rechazado. El punto de acceso está inhabilitado.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n  \"accessPointName\": \"Bodega central\",\n  \"occurredAt\": \"2026-10-27T17:29:09.4905653Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · Habilitar punto de acceso (bodega)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points/0199f7a0-0000-7000-8000-000000000003/enable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points",
+                "0199f7a0-0000-7000-8000-000000000003",
+                "enable"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 204."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points/0199f7a0-0000-7000-8000-000000000003/enable",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points",
+                    "0199f7a0-0000-7000-8000-000000000003",
+                    "enable"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 204."
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Entrada autorizada por bodega",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a483-7937-a88e-babf0c364b75\",\n  \"result\": \"Granted\",\n  \"rejectionReason\": null,\n  \"message\": \"Entrada autorizada.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-YBVVNDZX\",\n  \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n  \"employeeFullName\": \"Laura Gómez\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n  \"accessPointName\": \"Bodega central\",\n  \"occurredAt\": \"2026-10-27T17:29:09.5073445Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · Asignar credencial (Andrés)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"{{employee2Id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));",
+                  "if (pm.response.code === 201) { pm.collectionVariables.set('credential2Code', pm.response.json().code); }"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee2Id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"01a17e68-a48a-7762-a002-982b22a58d06\",\n  \"code\": \"CRD-KCBJFUHX\",\n  \"employeeId\": \"01a17e68-a2b9-7913-93d2-4e2333b741f0\",\n  \"employeeFullName\": \"Andrés Restrepo\",\n  \"status\": \"Active\",\n  \"canBeUsed\": true,\n  \"issuedAt\": \"2026-10-27T17:29:09.5145037Z\",\n  \"statusChangedAt\": null,\n  \"statusReason\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · Desactivar empleado (Andrés)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employee2Id}}/deactivate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "{{employee2Id}}",
+                "deactivate"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 204."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees/{{employee2Id}}/deactivate",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees",
+                    "{{employee2Id}}",
+                    "deactivate"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 204."
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Rechazo: empleado inactivo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credential2Code}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credential2Code}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a49c-7b4b-8fec-95d19abcdb15\",\n  \"result\": \"Denied\",\n  \"rejectionReason\": \"EmployeeInactive\",\n  \"message\": \"Acceso rechazado. El empleado no tiene un vínculo laboral activo.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-KCBJFUHX\",\n  \"employeeId\": \"01a17e68-a2b9-7913-93d2-4e2333b741f0\",\n  \"employeeFullName\": \"Andrés Restrepo\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"accessPointName\": \"Parqueadero\",\n  \"occurredAt\": \"2026-10-27T17:29:09.5323336Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · Revocar credencial (Andrés)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials/{{credential2Code}}/revoke",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials",
+                "{{credential2Code}}",
+                "revoke"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 204.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Terminación del contrato laboral\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials/{{credential2Code}}/revoke",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials",
+                    "{{credential2Code}}",
+                    "revoke"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 204.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Terminación del contrato laboral\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · Rechazo: credencial revocada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 201.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credential2Code}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 201.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credential2Code}}\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 201,
+              "status": "Created",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessRecordId\": \"01a17e68-a4aa-7616-8c7c-93067d241f0e\",\n  \"result\": \"Denied\",\n  \"rejectionReason\": \"CredentialRevoked\",\n  \"message\": \"Acceso rechazado. La credencial fue revocada.\",\n  \"movementType\": \"Entry\",\n  \"credentialCode\": \"CRD-KCBJFUHX\",\n  \"employeeId\": \"01a17e68-a2b9-7913-93d2-4e2333b741f0\",\n  \"employeeFullName\": \"Andrés Restrepo\",\n  \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n  \"accessPointName\": \"Parqueadero\",\n  \"occurredAt\": \"2026-10-27T17:29:09.5465584Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-04 · Historial completo (página de 5)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-history?pageSize=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-history"
+              ],
+              "query": [
+                {
+                  "key": "pageSize",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": "RF-04. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-history?pageSize=5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "pageSize",
+                      "value": "5"
+                    }
+                  ]
+                },
+                "description": "RF-04. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"01a17e68-a4aa-7616-8c7c-93067d241f0e\",\n      \"occurredAt\": \"2026-10-27T17:29:09.5465584Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"CredentialRevoked\",\n      \"credentialCode\": \"CRD-KCBJFUHX\",\n      \"employeeId\": \"01a17e68-a2b9-7913-93d2-4e2333b741f0\",\n      \"employeeIdentification\": \"1020304050\",\n      \"employeeFullName\": \"Andrés Restrepo\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n      \"accessPointName\": \"Parqueadero\",\n      \"rejectionDescription\": \"La credencial fue revocada.\"\n    },\n    {\n      \"id\": \"01a17e68-a49c-7b4b-8fec-95d19abcdb15\",\n      \"occurredAt\": \"2026-10-27T17:29:09.5323336Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"EmployeeInactive\",\n      \"credentialCode\": \"CRD-KCBJFUHX\",\n      \"employeeId\": \"01a17e68-a2b9-7913-93d2-4e2333b741f0\",\n      \"employeeIdentification\": \"1020304050\",\n      \"employeeFullName\": \"Andrés Restrepo\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n      \"accessPointName\": \"Parqueadero\",\n      \"rejectionDescription\": \"El empleado no tiene un vínculo laboral activo.\"\n    },\n    {\n      \"id\": \"01a17e68-a483-7937-a88e-babf0c364b75\",\n      \"occurredAt\": \"2026-10-27T17:29:09.5073445Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Granted\",\n      \"rejectionReason\": null,\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n      \"accessPointName\": \"Bodega central\",\n      \"rejectionDescription\": null\n    },\n    {\n      \"id\": \"01a17e68-a472-7d0d-8a1a-645ee6b02a48\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4905653Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"AccessPointDisabled\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n      \"accessPointName\": \"Bodega central\",\n      \"rejectionDescription\": \"El punto de acceso está inhabilitado.\"\n    },\n    {\n      \"id\": \"01a17e68-a449-7bfc-b949-ce70b47a858b\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4492206Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"CredentialBlocked\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": \"La credencial está bloqueada.\"\n    }\n  ],\n  \"totalCount\": 10,\n  \"pageNumber\": 1,\n  \"pageSize\": 5,\n  \"totalPages\": 2,\n  \"hasPreviousPage\": false,\n  \"hasNextPage\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-04 · Historial de un empleado, solo rechazos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-history?employeeId={{employeeId}}&result=Denied",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-history"
+              ],
+              "query": [
+                {
+                  "key": "employeeId",
+                  "value": "{{employeeId}}"
+                },
+                {
+                  "key": "result",
+                  "value": "Denied"
+                }
+              ]
+            },
+            "description": "RF-04. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-history?employeeId={{employeeId}}&result=Denied",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "employeeId",
+                      "value": "{{employeeId}}"
+                    },
+                    {
+                      "key": "result",
+                      "value": "Denied"
+                    }
+                  ]
+                },
+                "description": "RF-04. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"01a17e68-a472-7d0d-8a1a-645ee6b02a48\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4905653Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"AccessPointDisabled\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000003\",\n      \"accessPointName\": \"Bodega central\",\n      \"rejectionDescription\": \"El punto de acceso está inhabilitado.\"\n    },\n    {\n      \"id\": \"01a17e68-a449-7bfc-b949-ce70b47a858b\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4492206Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"CredentialBlocked\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": \"La credencial está bloqueada.\"\n    },\n    {\n      \"id\": \"01a17e68-a42f-7c01-b376-b2efd72eb9f9\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4230367Z\",\n      \"movementType\": \"Exit\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"NotInside\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": \"El empleado no tiene una entrada registrada para poder salir.\"\n    },\n    {\n      \"id\": \"01a17e68-a41b-76f5-b374-ee357638330c\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4039522Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"AlreadyInside\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000002\",\n      \"accessPointName\": \"Parqueadero\",\n      \"rejectionDescription\": \"El empleado ya registró una entrada y no ha registrado su salida.\"\n    }\n  ],\n  \"totalCount\": 4,\n  \"pageNumber\": 1,\n  \"pageSize\": 15,\n  \"totalPages\": 1,\n  \"hasPreviousPage\": false,\n  \"hasNextPage\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-04 · Historial de un punto de acceso en un rango de fechas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-history?accessPointId=0199f7a0-0000-7000-8000-000000000001&from=2026-10-27&to=2026-10-27",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-history"
+              ],
+              "query": [
+                {
+                  "key": "accessPointId",
+                  "value": "0199f7a0-0000-7000-8000-000000000001"
+                },
+                {
+                  "key": "from",
+                  "value": "2026-10-27"
+                },
+                {
+                  "key": "to",
+                  "value": "2026-10-27"
+                }
+              ]
+            },
+            "description": "RF-04. Respuesta esperada: 200."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-history?accessPointId=0199f7a0-0000-7000-8000-000000000001&from=2026-10-27&to=2026-10-27",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "accessPointId",
+                      "value": "0199f7a0-0000-7000-8000-000000000001"
+                    },
+                    {
+                      "key": "from",
+                      "value": "2026-10-27"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-10-27"
+                    }
+                  ]
+                },
+                "description": "RF-04. Respuesta esperada: 200."
+              },
+              "code": 200,
+              "status": "OK",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"01a17e68-a449-7bfc-b949-ce70b47a858b\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4492206Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"CredentialBlocked\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": \"La credencial está bloqueada.\"\n    },\n    {\n      \"id\": \"01a17e68-a434-720f-9af4-dd834e98c463\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4282262Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"CredentialNotFound\",\n      \"credentialCode\": \"CRD-NOEXISTE\",\n      \"employeeId\": null,\n      \"employeeIdentification\": null,\n      \"employeeFullName\": null,\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": \"La credencial no está registrada.\"\n    },\n    {\n      \"id\": \"01a17e68-a42f-7c01-b376-b2efd72eb9f9\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4230367Z\",\n      \"movementType\": \"Exit\",\n      \"result\": \"Denied\",\n      \"rejectionReason\": \"NotInside\",\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": \"El empleado no tiene una entrada registrada para poder salir.\"\n    },\n    {\n      \"id\": \"01a17e68-a428-7650-aeb7-dd634209ac5f\",\n      \"occurredAt\": \"2026-10-27T17:29:09.4162324Z\",\n      \"movementType\": \"Exit\",\n      \"result\": \"Granted\",\n      \"rejectionReason\": null,\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": null\n    },\n    {\n      \"id\": \"01a17e68-a3e3-79d1-a60b-85743982480c\",\n      \"occurredAt\": \"2026-10-27T17:29:09.348277Z\",\n      \"movementType\": \"Entry\",\n      \"result\": \"Granted\",\n      \"rejectionReason\": null,\n      \"credentialCode\": \"CRD-YBVVNDZX\",\n      \"employeeId\": \"01a17e68-a282-76c1-b8e1-c7a05dfcf765\",\n      \"employeeIdentification\": \"1037654321\",\n      \"employeeFullName\": \"Laura Gómez\",\n      \"accessPointId\": \"0199f7a0-0000-7000-8000-000000000001\",\n      \"accessPointName\": \"Recepción principal\",\n      \"rejectionDescription\": null\n    }\n  ],\n  \"totalCount\": 5,\n  \"pageNumber\": 1,\n  \"pageSize\": 15,\n  \"totalPages\": 1,\n  \"hasPreviousPage\": false,\n  \"hasNextPage\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · Inhabilitar un punto de acceso",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points/{{archivoId}}/disable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points",
+                "{{archivoId}}",
+                "disable"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 204."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "204",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points/{{archivoId}}/disable",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points",
+                    "{{archivoId}}",
+                    "disable"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 204."
+              },
+              "code": 204,
+              "status": "No Content",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Errores de validación",
+      "item": [
+        {
+          "name": "RF-01 · 400 · Correo inválido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificationNumber\": \"99887766\",\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"correo-sin-arroba\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identificationNumber\": \"99887766\",\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"correo-sin-arroba\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Regla de negocio incumplida\",\n  \"status\": 400,\n  \"detail\": \"El correo electrónico no tiene un formato válido.\",\n  \"traceId\": \"00-5543c14688fea91535a14723575af131-880560bf6232b671-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · 400 · Identificación con letras",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificationNumber\": \"10AB2030\",\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"otro@logistica.com\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identificationNumber\": \"10AB2030\",\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"otro@logistica.com\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Regla de negocio incumplida\",\n  \"status\": 400,\n  \"detail\": \"El número de identificación solo puede contener números.\",\n  \"traceId\": \"00-154a1ad8caa69c0947da2154e462b591-0be25af5fc3ec0c7-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · 409 · Identificación duplicada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identificationNumber\": \"1037654321\",\n  \"firstName\": \"Laura\",\n  \"lastName\": \"Gómez\",\n  \"email\": \"otra@logistica.com\",\n  \"jobTitle\": \"Analista de inventarios\",\n  \"area\": \"Bodega\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "409",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 409.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identificationNumber\": \"1037654321\",\n  \"firstName\": \"Laura\",\n  \"lastName\": \"Gómez\",\n  \"email\": \"otra@logistica.com\",\n  \"jobTitle\": \"Analista de inventarios\",\n  \"area\": \"Bodega\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 409,
+              "status": "Conflict",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.10\",\n  \"title\": \"Conflicto con datos existentes\",\n  \"status\": 409,\n  \"detail\": \"Ya existe un empleado registrado con la identificación 1037654321.\",\n  \"traceId\": \"00-ceccf80dc649c77022a51f81f6102b58-b0120d05b3cb91ec-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · 400 · Actualizar un empleado inactivo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employee2Id}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "{{employee2Id}}"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"andres.restrepo@logistica.com\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees/{{employee2Id}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees",
+                    "{{employee2Id}}"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"Andrés\",\n  \"lastName\": \"Restrepo\",\n  \"email\": \"andres.restrepo@logistica.com\",\n  \"jobTitle\": \"Conductor\",\n  \"area\": \"Transporte\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Regla de negocio incumplida\",\n  \"status\": 400,\n  \"detail\": \"No se pueden modificar los datos de un empleado inactivo.\",\n  \"traceId\": \"00-3686f03081cbb490b5c908a2fed4f653-987e577ab25c5a35-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-01 · 404 · Empleado inexistente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/00000000-0000-0000-0000-000000000001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "employees",
+                "00000000-0000-0000-0000-000000000001"
+              ]
+            },
+            "description": "RF-01. Respuesta esperada: 404."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "404",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees/00000000-0000-0000-0000-000000000001",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees",
+                    "00000000-0000-0000-0000-000000000001"
+                  ]
+                },
+                "description": "RF-01. Respuesta esperada: 404."
+              },
+              "code": 404,
+              "status": "Not Found",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n  \"title\": \"Recurso no encontrado\",\n  \"status\": 404,\n  \"detail\": \"No existe un empleado con el Id 00000000-0000-0000-0000-000000000001.\",\n  \"traceId\": \"00-2464a59f743bb51e56fc6b0fc720224b-94c66b290b3f58c5-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · 409 · El empleado ya tiene una credencial vigente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"{{employeeId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "409",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 409.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employeeId}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 409,
+              "status": "Conflict",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.10\",\n  \"title\": \"Conflicto con datos existentes\",\n  \"status\": 409,\n  \"detail\": \"El empleado ya tiene una credencial activa o bloqueada. Revóquela antes de asignar una nueva.\",\n  \"traceId\": \"00-280e733738447b734cec92db937fe739-df256ce6d64c5014-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · 400 · Asignar credencial a un empleado inactivo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"{{employee2Id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"employeeId\": \"{{employee2Id}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Regla de negocio incumplida\",\n  \"status\": 400,\n  \"detail\": \"No se puede asignar una credencial a un empleado inactivo.\",\n  \"traceId\": \"00-16bfa4dd59fba2c7bd73512255813017-c2b06f025a960b8a-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · 400 · Revocar una credencial ya revocada",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials/{{credential2Code}}/revoke",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials",
+                "{{credential2Code}}",
+                "revoke"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Intento duplicado de revocación\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials/{{credential2Code}}/revoke",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials",
+                    "{{credential2Code}}",
+                    "revoke"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"Intento duplicado de revocación\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Regla de negocio incumplida\",\n  \"status\": 400,\n  \"detail\": \"La credencial ya se encuentra revocada.\",\n  \"traceId\": \"00-efa1c46c6c65a8dacc550426490a8055-57c7fd615acea7dd-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-02 · 400 · Motivo de bloqueo demasiado corto",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}/block",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "credentials",
+                "{{credentialCode}}",
+                "block"
+              ]
+            },
+            "description": "RF-02. Respuesta esperada: 400.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/credentials/{{credentialCode}}/block",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "credentials",
+                    "{{credentialCode}}",
+                    "block"
+                  ]
+                },
+                "description": "RF-02. Respuesta esperada: 400.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"x\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Regla de negocio incumplida\",\n  \"status\": 400,\n  \"detail\": \"El motivo debe tener entre 5 y 200 caracteres.\",\n  \"traceId\": \"00-6c265c24a1749b61af4203b10990638f-29e659f82f9f85b6-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-03 · 404 · Punto de acceso inexistente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-requests"
+              ]
+            },
+            "description": "RF-03. Respuesta esperada: 404.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"00000000-0000-0000-0000-000000000009\",\n  \"movementType\": \"Entry\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "404",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-requests",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-requests"
+                  ]
+                },
+                "description": "RF-03. Respuesta esperada: 404.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialCode\": \"{{credentialCode}}\",\n  \"accessPointId\": \"00000000-0000-0000-0000-000000000009\",\n  \"movementType\": \"Entry\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 404,
+              "status": "Not Found",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.5\",\n  \"title\": \"Recurso no encontrado\",\n  \"status\": 404,\n  \"detail\": \"No existe un punto de acceso con el Id 00000000-0000-0000-0000-000000000009.\",\n  \"traceId\": \"00-5ad7e79c1c460eaf033f401007eaddd2-5142f362ea1116e1-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-04 · 400 · Rango de fechas invertido",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-history?from=2026-12-31&to=2026-01-01",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-history"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2026-12-31"
+                },
+                {
+                  "key": "to",
+                  "value": "2026-01-01"
+                }
+              ]
+            },
+            "description": "RF-04. Respuesta esperada: 400."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-history?from=2026-12-31&to=2026-01-01",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-history"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2026-12-31"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-01-01"
+                    }
+                  ]
+                },
+                "description": "RF-04. Respuesta esperada: 400."
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Datos de la petición no válidos\",\n  \"status\": 400,\n  \"detail\": \"La fecha inicial no puede ser posterior a la fecha final.\",\n  \"traceId\": \"00-18d151fdeb76c7d00b24f242f8dbf7c5-b7e2eb547da0de9c-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · 409 · Nombre de punto de acceso duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 409.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Parqueadero\",\n  \"type\": \"Parking\",\n  \"location\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "409",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 409.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Parqueadero\",\n  \"type\": \"Parking\",\n  \"location\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "code": 409,
+              "status": "Conflict",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.10\",\n  \"title\": \"Conflicto con datos existentes\",\n  \"status\": 409,\n  \"detail\": \"Ya existe un punto de acceso con el nombre Parqueadero.\",\n  \"traceId\": \"00-691dcfbc8b73891f792e899f680309f1-81f4a15b0b68d63c-00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "RF-06 · 400 · Inhabilitar un punto ya inhabilitado",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/access-points/{{archivoId}}/disable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "access-points",
+                "{{archivoId}}",
+                "disable"
+              ]
+            },
+            "description": "RF-06. Respuesta esperada: 400."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 400', () => pm.response.to.have.status(400));"
+                ]
+              }
+            }
+          ],
+          "response": [
+            {
+              "name": "400",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/access-points/{{archivoId}}/disable",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "access-points",
+                    "{{archivoId}}",
+                    "disable"
+                  ]
+                },
+                "description": "RF-06. Respuesta esperada: 400."
+              },
+              "code": 400,
+              "status": "Bad Request",
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://tools.ietf.org/html/rfc9110#section-15.5.1\",\n  \"title\": \"Regla de negocio incumplida\",\n  \"status\": 400,\n  \"detail\": \"El punto de acceso ya se encuentra inhabilitado.\",\n  \"traceId\": \"00-af4f2278aa0391c665ff5fd20f4800e5-cdebb63fc8adf694-00\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5190"
+    },
+    {
+      "key": "employeeId",
+      "value": ""
+    },
+    {
+      "key": "employee2Id",
+      "value": ""
+    },
+    {
+      "key": "credentialCode",
+      "value": ""
+    },
+    {
+      "key": "credential2Code",
+      "value": ""
+    },
+    {
+      "key": "archivoId",
+      "value": ""
+    }
+  ]
+}
