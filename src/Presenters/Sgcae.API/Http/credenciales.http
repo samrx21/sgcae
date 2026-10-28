@@ -1,0 +1,82 @@
+# RF-02. Gestión de credenciales
+# Ejecuta las peticiones en orden con "Send Request" (Visual Studio o Rider).
+
+@baseUrl = http://localhost:5190
+# Reemplaza estos valores con los que devuelven las peticiones de registro
+@employeeId = PEGAR_AQUI
+@employee2Id = PEGAR_AQUI
+@credentialCode = PEGAR_AQUI
+@credential2Code = PEGAR_AQUI
+
+### Asignar credencial (Laura) (esperado: 201)
+POST {{baseUrl}}/api/credentials
+Content-Type: application/json
+
+{
+  "employeeId": "{{employeeId}}"
+}
+
+### Consultar credencial por código (esperado: 200)
+GET {{baseUrl}}/api/credentials/{{credentialCode}}
+
+### Listar credenciales de un empleado (esperado: 200)
+GET {{baseUrl}}/api/credentials?employeeId={{employeeId}}
+
+### Bloquear credencial (esperado: 204)
+PATCH {{baseUrl}}/api/credentials/{{credentialCode}}/block
+Content-Type: application/json
+
+{
+  "reason": "Reporte de pérdida del carné"
+}
+
+### Desbloquear credencial (esperado: 204)
+PATCH {{baseUrl}}/api/credentials/{{credentialCode}}/unblock
+
+### Asignar credencial (Andrés) (esperado: 201)
+POST {{baseUrl}}/api/credentials
+Content-Type: application/json
+
+{
+  "employeeId": "{{employee2Id}}"
+}
+
+### Revocar credencial (Andrés) (esperado: 204)
+PATCH {{baseUrl}}/api/credentials/{{credential2Code}}/revoke
+Content-Type: application/json
+
+{
+  "reason": "Terminación del contrato laboral"
+}
+
+### 409 · El empleado ya tiene una credencial vigente (esperado: 409)
+POST {{baseUrl}}/api/credentials
+Content-Type: application/json
+
+{
+  "employeeId": "{{employeeId}}"
+}
+
+### 400 · Asignar credencial a un empleado inactivo (esperado: 400)
+POST {{baseUrl}}/api/credentials
+Content-Type: application/json
+
+{
+  "employeeId": "{{employee2Id}}"
+}
+
+### 400 · Revocar una credencial ya revocada (esperado: 400)
+PATCH {{baseUrl}}/api/credentials/{{credential2Code}}/revoke
+Content-Type: application/json
+
+{
+  "reason": "Intento duplicado de revocación"
+}
+
+### 400 · Motivo de bloqueo demasiado corto (esperado: 400)
+PATCH {{baseUrl}}/api/credentials/{{credentialCode}}/block
+Content-Type: application/json
+
+{
+  "reason": "x"
+}
